@@ -1,0 +1,6 @@
+---
+- name: Deploy PowerDNS and PowerDNS-Admin
+  hosts: powerdns
+  become: true
+  roles:
+    - powerdns
