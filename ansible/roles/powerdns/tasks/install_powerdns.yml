@@ -65,6 +65,27 @@
     state: stopped
     enabled: false
 
+- name: Check file type
+  ansible.builtin.stat:
+    path: /etc/resolv.conf
+  register: ansible_stat
+
+- name: Delete symbolic link if exists
+  ansible.builtin.file:
+    path: /etc/resolv.conf  
+    state: absent
+  when: ansible_stat.stat.islnk is defined and ansible_stat.stat.islnk
+  register: stat_result
+  check_mode: false
+
+- name: Template resolv.conf.j2 to /etc/resolv.conf
+  ansible.builtin.template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: '0644'
+
 - name: Ensure keyring directory exists
   ansible.builtin.file:
     path: "{{ powerdns_keyring_dir }}"

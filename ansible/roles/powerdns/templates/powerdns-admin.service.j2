@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
-User="{{ powerdns_pdnsadmin_admin_user_system }}"
-Group="{{ powerdns_pdnsadmin_admin_group_system }}"
+User={{ powerdns_pdnsadmin_admin_user_system }}
+Group={{ powerdns_pdnsadmin_admin_group_system }}
 WorkingDirectory=/opt/powerdns-admin
 Environment=FLASK_APP=powerdnsadmin
 Environment=FLASK_ENV=production
@@ -14,10 +14,7 @@ Environment=PYTHONPATH=/opt/powerdns-admin
 ExecStart=/opt/powerdns-admin/venv/bin/gunicorn \
 --bind 0.0.0.0:9191 \
 --workers 4 \
---log-file=/opt/powerdns-admin/logs/gunicorn.log \
---access-logfile=/opt/powerdns-admin/logs/access.log \
---error-logfile=/opt/powerdns-admin/logs/error.log \
-'powerdnsadmin:create_app()'
+powerdnsadmin:create_app()
 
 Restart=always
 RestartSec=5

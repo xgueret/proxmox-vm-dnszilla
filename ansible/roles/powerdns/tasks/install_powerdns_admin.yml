@@ -25,14 +25,6 @@
     group: "{{ powerdns_pdnsadmin_admin_group_system }}"
     mode: '0755'
 
-- name: Create static directory
-  ansible.builtin.file:
-    path: "/opt/powerdns-admin/powerdnsadmin/static"
-    state: directory
-    owner: "{{ powerdns_pdnsadmin_admin_user_system }}"
-    group: "{{ powerdns_pdnsadmin_admin_group_system }}"
-    mode: '0755'
-
 - name: Clone PowerDNS-Admin repository
   ansible.builtin.git:
     repo: "{{ powerdns_admin_repo_url }}"
@@ -76,6 +68,14 @@
     owner: "{{ powerdns_pdnsadmin_admin_user_system }}"
     group: "{{ powerdns_pdnsadmin_admin_group_system }}"
     mode: '0644'
+    
+- name: Create static directory
+  ansible.builtin.file:
+    path: "/opt/powerdns-admin/powerdnsadmin/static"
+    state: directory
+    owner: "{{ powerdns_pdnsadmin_admin_user_system }}"
+    group: "{{ powerdns_pdnsadmin_admin_group_system }}"
+    mode: '0755'
     
 - name: Create symbolic link for node_modules
   ansible.builtin.file:
